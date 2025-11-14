@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Control de Hábitos</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Mi Control de Hábitos</h1>
+
+      <!-- NUEVO: Formulario para agregar hábitos y resetear -->
+      <div id="habit-form">
+        <input type="text" id="new-habit" placeholder="Nuevo hábito..." />
+        <button id="add-habit">Agregar</button>
+        <button id="reset">Resetear Día</button>
+      </div>
+
+      <!-- Lista de hábitos y estadísticas -->
+      <div id="habit-list"></div>
+      <div id="stats"></div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>

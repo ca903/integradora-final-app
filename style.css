@@ -1,0 +1,59 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #41b99b;
+  padding: 20px;
+  color: #000000;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: rgb(95, 125, 84);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+}
+
+.habit {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.habit label {
+  flex-grow: 1;
+}
+
+#stats {
+  margin-top: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#habit-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#habit-form input {
+  flex-grow: 1;
+  padding: 5px;
+}
+
+#habit-form button {
+  padding: 6px 12px;
+  border: none;
+  background: #04b53c;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#habit-form button:hover {
+  background: #04560d;
+}
