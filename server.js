@@ -24,12 +24,84 @@ const pool = new Pool({
 // desde la misma carpeta donde está server.js.
 app.use(express.static(path.join(__dirname)));
 
-// --- RUTAS CRUD: Aquí es donde agregaremos la lógica de DB (Paso 3) ---
-// app.get('/api/habits', ...);
-// app.post('/api/habits', ...);
-// ...
+// ... (código existente hasta la línea 27)
 
-// --- INICIAR EL SERVIDOR ---
-app.listen(port, () => {
-  console.log(`Servidor de hábitos corriendo en http://localhost:${port}`);
+// --- RUTAS CRUD: Aquí es donde agregaremos la Lógica de DB (Paso 3) ---
+
+// 1. OBTENER todos los hábitos: Consultar todos los registros
+app.get("/api/habits", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM habits ORDER BY id");
+    res.json(result.rows); // Envía la lista de hábitos como respuesta
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error al consultar los hábitos.");
+  }
 });
+
+// 2. CREAR un nuevo hábito
+app.post("/api/habits", async (req, res) => {
+  const { name } = req.body;
+  try {
+    // Inserta un nuevo hábito con 'completed' en FALSE por defecto
+    const result = await pool.query(
+      "INSERT INTO habits (name, completed) VALUES ($1, FALSE) RETURNING *",
+      [name]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error al crear el hábito.");
+  }
+});
+
+// 3. ACTUALIZAR el estado de un hábito (PUT)
+app.put("/api/habits/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  // Espera recibir { completed: true/false }
+  const { completed } = req.body;
+  try {
+    const result = await pool.query(
+      "UPDATE habits SET completed = $1 WHERE id = $2 RETURNING *",
+      [completed, id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).send("Hábito no encontrado.");
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error al actualizar el hábito.");
+  }
+});
+
+// 4. ELIMINAR un hábito (DELETE)
+app.delete("/api/habits/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  try {
+    const result = await pool.query(
+      "DELETE FROM habits WHERE id = $1 RETURNING *",
+      [id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).send("Hábito no encontrado.");
+    }
+    res.json({ message: "Hábito eliminado", id });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error al eliminar el hábito.");
+  }
+});
+
+// 5. RESETEAR todos los hábitos (Marcar todos como NO completados)
+app.post("/api/habits/reset", async (req, res) => {
+  try {
+    await pool.query("UPDATE habits SET completed = FALSE");
+    res.json({ message: "Hábitos reseteados" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error al resetear los hábitos.");
+  }
+});
+
+// ... (código existente de app.listen)
