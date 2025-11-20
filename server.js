@@ -20,16 +20,13 @@ app.get("/test", (req, res) => {
 
 // 1. RUTA GET: Obtener todos los hábitos
 app.get("/api/habitos", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM habitos ORDER BY id");
-    res.json(result.rows);
-  } catch (err) {
-    console.error("Error al obtener hábitos:", err.message);
-    res.status(500).json({
-      error: "Error interno del servidor al consultar la base de datos.",
-    });
-  }
-});
+  try {
+    // CAMBIO CRUCIAL AQUÍ: Simplificar la consulta.
+    const result = await pool.query("SELECT * FROM habitos"); 
+    // Envía los datos de la DB al frontend
+    res.json(result.rows);
+  } catch (err) {
+// ... el código de manejo de error se queda igual.
 
 // 2. RUTA POST: Agregar un nuevo hábito
 app.post("/api/habitos", async (req, res) => {
