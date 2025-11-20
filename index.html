@@ -3,24 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Control de Hábitos</title>
+    <title>Control de Hábitos - Unidad 3</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <header class="site-header">
+      <div class="header-content">
+        <img src="logo.png" alt="Logo del Sitio" class="logo" />
+        <h2>Plataforma de Despliegue en Nube</h2>
+      </div>
+    </header>
+
     <div class="container">
       <h1>Mi Control de Hábitos</h1>
 
-      <!-- NUEVO: Formulario para agregar hábitos y resetear -->
+      <p class="streaming-link">
+        Mira este video sobre la nube:
+        <a href="https://www.youtube.com/watch?v=EjemploID" target="_blank">
+          Video Introductorio al Cloud Computing
+        </a>
+      </p>
+      <hr />
+
       <div id="habit-form">
         <input type="text" id="new-habit" placeholder="Nuevo hábito..." />
         <button id="add-habit">Agregar</button>
         <button id="reset">Resetear Día</button>
       </div>
 
-      <!-- Lista de hábitos y estadísticas -->
       <div id="habit-list"></div>
       <div id="stats"></div>
     </div>
+
+    <footer class="site-footer">
+      <p><strong>Curso:</strong> Conceptualización de Servicios en la Nube</p>
+      <p><strong>Alumno:</strong> [Tu Nombre Completo]</p>
+      <p><strong>Código:</strong> [Tu Código o Matrícula]</p>
+      <p>
+        <strong>Contacto:</strong>
+        <a href="mailto:tu.correo@ejemplo.com">tu.correo@ejemplo.com</a>
+      </p>
+    </footer>
 
     <script src="main.js"></script>
   </body>
