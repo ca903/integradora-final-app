@@ -57,3 +57,10 @@ h1 {
 #habit-form button:hover {
   background: #04560d;
 }
+/* --- ESTILO PARA EL LOGO (NECESARIO PARA REDUCIR EL TAMAÑO) --- */
+.logo {
+  height: 50px; /* Define una altura pequeña */
+  width: auto; /* Asegura que el ancho se ajuste automáticamente (mantener proporción) */
+  margin-right: 15px; /* Espacio a la derecha del logo */
+  vertical-align: middle; /* Alineación vertical */
+}
