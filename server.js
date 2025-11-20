@@ -88,6 +88,10 @@ app.post("/api/habitos", async (req, res) => {
 // ====================================================================
 // 3. INICIAR EL SERVIDOR
 // ====================================================================
+// Ruta de prueba de conexión de Express
+app.get("/test", (req, res) => {
+  res.status(200).json({ status: "Express Server is UP!" });
+});
 app.listen(PORT, () => {
   console.log(`🚀 Servidor Express corriendo en el puerto ${PORT}`);
 });
