@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 // ====================================================================
-// 1. RUTAS API Y DE PRUEBA (Mover a la parte superior) ⬅️
+// 1. RUTAS API Y DE PRUEBA (Definidas antes de la configuración estática)
 // ====================================================================
 
 // Ruta de prueba de conexión de Express (Para debugging)
@@ -20,13 +20,19 @@ app.get("/test", (req, res) => {
 
 // 1. RUTA GET: Obtener todos los hábitos
 app.get("/api/habitos", async (req, res) => {
-  try {
-    // CAMBIO CRUCIAL AQUÍ: Simplificar la consulta.
-    const result = await pool.query("SELECT * FROM habitos"); 
-    // Envía los datos de la DB al frontend
-    res.json(result.rows);
-  } catch (err) {
-// ... el código de manejo de error se queda igual.
+  try {
+    // CONSULTA SIMPLIFICADA FINAL
+    const result = await pool.query("SELECT * FROM habitos");
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error al obtener hábitos:", err.message);
+    res.status(500).json({
+      error:
+        "Error interno del servidor al consultar la base de datos." +
+        err.message,
+    });
+  }
+});
 
 // 2. RUTA POST: Agregar un nuevo hábito
 app.post("/api/habitos", async (req, res) => {
@@ -46,10 +52,12 @@ app.post("/api/habitos", async (req, res) => {
 // ====================================================================
 // 2. CONFIGURACIÓN DE PUERTO Y BASE DE DATOS
 // ====================================================================
+// **Configuración Crucial del Puerto para Despliegue en la Nube**
 const PORT = process.env.PORT || 3000;
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  // Usa la variable de entorno DATABASE_URL
+  connectionString: process.env.DATABASE_URL, // **IMPORTANTE:** Configuración SSL necesaria para conexiones desde Render
   ssl: {
     rejectUnauthorized: false,
   },
@@ -66,7 +74,7 @@ pool.connect((err, client, release) => {
 });
 
 // ====================================================================
-// 3. SERVIR ARCHIVOS ESTÁTICOS Y RUTA RAÍZ (DEBE IR AL FINAL PARA CAPTURAR TODO LO DEMÁS) ⬅️
+// 3. SERVIR ARCHIVOS ESTÁTICOS Y RUTA RAÍZ (Colocado al final para no sobrescribir APIs)
 // ====================================================================
 
 // Esto le dice a Express que sirva archivos estáticos (CSS, JS, imágenes) desde la carpeta raíz.
