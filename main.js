@@ -1,6 +1,6 @@
 // main.js (CÓDIGO MODIFICADO PARA USAR LA API)
 
-const API_URL = "/api/habits";
+const API_URL = "/api/habitos";
 
 // --- Funciones de comunicación con el Backend (DB) ---
 
@@ -28,7 +28,7 @@ async function addHabitToServer(name) {
   await fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name }),
+    body: JSON.stringify({ nombre: name }),
   });
 }
 
