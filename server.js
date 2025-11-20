@@ -63,11 +63,9 @@ app.get("/api/habitos", async (req, res) => {
   } catch (err) {
     // Captura errores de la DB y notifica al frontend
     console.error("Error al obtener hábitos:", err.message);
-    res
-      .status(500)
-      .json({
-        error: "Error interno del servidor al consultar la base de datos.",
-      });
+    res.status(500).json({
+      error: "Error interno del servidor al consultar la base de datos.",
+    });
   }
 });
 
